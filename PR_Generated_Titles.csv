@@ -1,0 +1,6 @@
+PR Number,Original PR Title,Generated PR Title
+6234,Select all text in Edit field name,Update EditFieldNameDialog: Select all text in field name
+6266,"Fix FDIVP freg,ST0 in x86",Fix typo in ia.sinc: FDIVRP opcode operands order
+6270,SPARC: Update missing relocation enum types and order by value,Fix: Add relocations to various ELF relocation enums
+6302,Fix Mach-O import when no segment contains the header,Fix: Improve header-less MachO image handling
+6331,Add support for FreeBSD ARM 64bit (no debugger support),Support for FreeBSD ARM 64-bit systems

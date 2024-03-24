@@ -1,5 +1,6 @@
 import requests
 import json
+import csv
 
 """
 At the command line, only need to run once to install the package via pip:
@@ -59,6 +60,7 @@ def get_last_n_merged_prs(github_token, repo_link, n):
             mergedAt
             url
             title
+            number
           }
         }
       }
@@ -92,24 +94,27 @@ def get_last_n_merged_prs(github_token, repo_link, n):
         return None
 
 def get_diffs_and_save(github_token, pr_urls):
-   headers = {'Authorization': f'token {github_token}', 'Accept': 'application/vnd.github.v3.diff'}
-   diffs = {}
+    headers = {'Authorization': f'token {github_token}', 'Accept': 'application/vnd.github.v3.diff'}
+    diffs = {}
 
-   for url in pr_urls:
-      diff_url = url + '.diff'
-      response = requests.get(diff_url, headers=headers)
+    for url in pr_urls:
+        diff_url = url + '.diff'
+        response = requests.get(diff_url, headers=headers)
 
-      if response.status_code == 200:
-         diffs[diff_url] = response.text
-      else:
-         print(f'Error: {response.status_code}')
+        if response.status_code == 200:
+            diffs[diff_url] = response.text
+        else:
+            print(f'Error: {response.status_code}')
 
-   with open('diffs.json', 'w') as f:
-      json.dump(diffs, f)
+    with open('diffs.json', 'w') as f:
+        json.dump(diffs, f)
 
-   for diff_url, diff in diffs.items():
-      convo.send_message(f"Generate a title for the pull request at {diff_url}, by summarizing the {diff} features in one line. Note that the output will only inlcude titles line by line, nothing else.")
-      print(convo.last.text)
+    pr_titles = []
+    for diff_url, diff in diffs.items():
+        convo.send_message(f"Generate a title for the pull request at {diff_url}, by summarizing the {diff} features in one line. Note that the output will only inlcude titles line by line, nothing else.")
+        pr_titles.append(convo.last.text)
+
+    return pr_titles
 
 def main():
     github_token = input("Please enter your GitHub token: ")
@@ -123,12 +128,20 @@ def main():
     with open('output.json', 'w') as f:
         # Write the PRs to the file
         json.dump(last_n_merged_prs, f)
-        
+
     # Extract the URLs of the PRs
     pr_urls = [pr['url'] for pr in last_n_merged_prs]
 
     # Get the diffs and save them to a JSON file
-    get_diffs_and_save(github_token, pr_urls)
+    generated_pr_titles = get_diffs_and_save(github_token, pr_urls)
+
+    # Create a CSV file
+    with open('PR_Generated_Titles.csv', 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['PR Number', 'Original PR Title', 'Generated PR Title'])
+
+        for pr, generated_title in zip(last_n_merged_prs, generated_pr_titles):
+            writer.writerow([pr['number'], pr['title'], generated_title])
 
 if __name__ == "__main__":
     main()
