@@ -1,4 +1,5 @@
 import requests
+import json
 
 def get_last_n_merged_prs(github_token, repo_link, n):
    # Extract the owner and repo name from the link
@@ -28,16 +29,17 @@ def get_last_n_merged_prs(github_token, repo_link, n):
       return None
 
 def main():
-   github_token = input("Please enter your GitHub token: ")
-   number = int(input("Please enter a number: "))  # Convert the input to an integer
-   github_repo_link = input("Please enter a GitHub repo link: ")
+    github_token = input("Please enter your GitHub token: ")
+    number = int(input("Please enter a number: "))  # Convert the input to an integer
+    github_repo_link = input("Please enter a GitHub repo link: ")
 
-   # Call the function with the inputs
-   last_n_merged_prs = get_last_n_merged_prs(github_token, github_repo_link, number)
+    # Call the function with the inputs
+    last_n_merged_prs = get_last_n_merged_prs(github_token, github_repo_link, number)
 
-   # Print the PRs
-   for pr in last_n_merged_prs:
-      print(pr)
+    # Open a JSON file in write mode
+    with open('output.json', 'w') as f:
+        # Write the PRs to the file
+        json.dump(last_n_merged_prs, f)
 
 if __name__ == "__main__":
-   main()
+    main()
