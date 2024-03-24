@@ -1,1 +1,32 @@
-[{"mergedAt": "2024-03-11T12:29:55Z", "url": "https://github.com/NationalSecurityAgency/ghidra/pull/6302", "title": "Fix Mach-O import when no segment contains the header"}, {"mergedAt": "2024-03-19T15:16:49Z", "url": "https://github.com/NationalSecurityAgency/ghidra/pull/6331", "title": "Add support for FreeBSD ARM 64bit (no debugger support)"}]
+[
+   {
+      "mergedAt": "2024-02-12T12:14:23Z",
+      "url": "https://github.com/NationalSecurityAgency/ghidra/pull/6209",
+      "title": "Fix typo in `GhidraAdvancedDevelopment.html`"
+   },
+   {
+      "mergedAt": "2024-02-26T21:23:59Z",
+      "url": "https://github.com/NationalSecurityAgency/ghidra/pull/6234",
+      "title": "Select all text in Edit field name"
+   },
+   {
+      "mergedAt": "2024-03-11T10:02:25Z",
+      "url": "https://github.com/NationalSecurityAgency/ghidra/pull/6266",
+      "title": "Fix FDIVP freg,ST0 in x86"
+   },
+   {
+      "mergedAt": "2024-03-07T13:17:04Z",
+      "url": "https://github.com/NationalSecurityAgency/ghidra/pull/6270",
+      "title": "SPARC: Update missing relocation enum types and order by value"
+   },
+   {
+      "mergedAt": "2024-03-11T12:29:55Z",
+      "url": "https://github.com/NationalSecurityAgency/ghidra/pull/6302",
+      "title": "Fix Mach-O import when no segment contains the header"
+   },
+   {
+      "mergedAt": "2024-03-19T15:16:49Z",
+      "url": "https://github.com/NationalSecurityAgency/ghidra/pull/6331",
+      "title": "Add support for FreeBSD ARM 64bit (no debugger support)"
+   }
+]

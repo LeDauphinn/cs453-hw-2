@@ -92,25 +92,24 @@ def get_last_n_merged_prs(github_token, repo_link, n):
         return None
 
 def get_diffs_and_save(github_token, pr_urls):
-    headers = {'Authorization': f'token {github_token}', 'Accept': 'application/vnd.github.v3.diff'}
-    diffs = {}
+   headers = {'Authorization': f'token {github_token}', 'Accept': 'application/vnd.github.v3.diff'}
+   diffs = {}
 
-    for url in pr_urls:
-        diff_url = url + '.diff'
-        response = requests.get(diff_url, headers=headers)
+   for url in pr_urls:
+      diff_url = url + '.diff'
+      response = requests.get(diff_url, headers=headers)
 
-        if response.status_code == 200:
-            diffs[diff_url] = response.text
-        else:
-            print(f'Error: {response.status_code}')
+      if response.status_code == 200:
+         diffs[diff_url] = response.text
+      else:
+         print(f'Error: {response.status_code}')
 
-    with open('diffs.json', 'w') as f:
-        json.dump(diffs, f)
-        
-    
-    values = ', '.join(diffs.values())
-    convo.send_message("There are ")
-    print(convo.last.text)
+   with open('diffs.json', 'w') as f:
+      json.dump(diffs, f)
+
+   for diff_url, diff in diffs.items():
+      convo.send_message(f"Generate a title for the pull request at {diff_url}, by summarizing the {diff} features in one line. Note that the output will only inlcude titles line by line, nothing else.")
+      print(convo.last.text)
 
 def main():
     github_token = input("Please enter your GitHub token: ")
